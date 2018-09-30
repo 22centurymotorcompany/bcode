@@ -45,8 +45,8 @@ const traverse = require('traverse')
 *   })
 */
 var encode = function(req) {
-  let copy = req
-  traverse(copy.q).forEach(function(token) {
+  let copy = { "$root": req }
+  traverse(copy).forEach(function(token) {
     if (this.isLeaf) {
       let encoding = "utf8"
       let newVal = token
@@ -112,12 +112,12 @@ var encode = function(req) {
         this.update(newVal)
         // 2. replicate current node to h-key
         node.parent.node[key] = node.node;
-        // 3. delete the old b-prefixed tree (need to delete because we'll use this for queries. If not deleted, it will become an AND operation)
+        // 3. delete the old h-prefixed tree (need to delete because we'll use this for queries. If not deleted, it will become an AND operation with the newly generated b-prefixed tree)
         node.delete();
       }
     }
   })
-  return copy
+  return copy["$root"]
 }
 
 /*

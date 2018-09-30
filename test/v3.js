@@ -278,6 +278,28 @@ describe('v3', function() {
       }
       comp(actual, expected)
     })
+    it('should not delete if the top level attribute is being mutated', function() {
+      let src = {
+        b0: {
+          op: 106
+        },
+        b1: "bQI=",
+        b2: "aGVsbG8gd29ybGQ=",
+        s2: "hello world"
+      };
+      let expected = {
+        b0: {
+          op: 106
+        },
+        b1: "bQI=",
+        h1: "6d02",
+        b2: "aGVsbG8gd29ybGQ=",
+        s2: "hello world",
+        h2: "68656c6c6f20776f726c64"
+      };
+      let actual = bcode.decode(src)
+      comp(actual, expected)
+    })
   })
   describe('encode', function() {
     it('should transform out.h* attributes', function() {
@@ -395,6 +417,20 @@ describe('v3', function() {
             "out.s2": "Hello World"
           }
         }
+      }
+      comp(actual, expected)
+    })
+
+    it('should not delete if the top level attribute is being mutated', function() {
+      let actual = bcode.encode({
+        "out.b0": { "op": 106 },
+        "out.h1": "6d02",
+        "out.s2": "Hello World"
+      })
+      let expected = {
+        "out.b0": { "op": 106 },
+        "out.b1": "bQI=",
+        "out.s2": "Hello World"
       }
       comp(actual, expected)
     })
