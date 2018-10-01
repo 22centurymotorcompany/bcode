@@ -34,7 +34,11 @@ describe('index', function() {
     }, {
       "out.b1": "6d02"
     })
-    expect(mock.v2.encode).to.have.been.called();
+    expect(mock.v2.encode).to.have.been.called.with({
+      "find": {}
+    }, {
+      "out.b1": "6d02"
+    });
     expect(mock.v3.encode).to.not.have.been.called();
   })
   it('calling encode() with encoding should call v3', function() {
@@ -42,7 +46,9 @@ describe('index', function() {
       "find": {}
     })
     expect(mock.v2.encode).to.not.have.been.called();
-    expect(mock.v3.encode).to.have.been.called();
+    expect(mock.v3.encode).to.have.been.called.with({
+      "find": {}
+    })
   })
   it('calling decode() without encoding should call v2', function() {
     bcode.decode({
@@ -50,7 +56,11 @@ describe('index', function() {
     }, {
       "out.b1": "6d02"
     })
-    expect(mock.v2.decode).to.have.been.called();
+    expect(mock.v2.decode).to.have.been.called.with({
+      "b1": "bQI="
+    }, {
+      "out.b1": "6d02"
+    });
     expect(mock.v3.decode).to.not.have.been.called();
   })
   it('calling decode() with encoding should call v3', function() {
@@ -58,6 +68,8 @@ describe('index', function() {
       "b1": "bQI="
     })
     expect(mock.v2.decode).to.not.have.been.called();
-    expect(mock.v3.decode).to.have.been.called();
+    expect(mock.v3.decode).to.have.been.called.with({
+      "b1": "bQI="
+    });
   })
 }) 

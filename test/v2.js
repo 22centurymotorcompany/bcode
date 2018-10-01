@@ -100,6 +100,53 @@ describe('v2', function() {
       let actual = bcode.encode(src, encoding)
       comp(actual, expected)
     })
+
+    it('should correctly transform compound queries 1', function() {
+      let src = {
+        find: {
+          "$text": {
+            "$search": "bet"
+          },
+          "out.b1": "6d02"
+        }
+      }
+      let encoding = { "out.b1": "hex" }
+      let expected = {
+        find: {
+          "$text": {
+            "$search": "bet"
+          },
+          "out.b1": "bQI="
+        }
+      }
+      let actual = bcode.encode(src, encoding)
+      comp(actual, expected)
+    })
+    it('should correctly transform compound queries 2', function() {
+      let src = {
+        find: {
+          "$text": {
+            "$search": "bet"
+          },
+          "out.b1": {
+            $exists: true
+          }
+        }
+      }
+      let encoding = { "out.b1": "hex" }
+      let expected = {
+        find: {
+          "$text": {
+            "$search": "bet"
+          },
+          "out.b1": {
+            $exists: true
+          }
+        }
+      }
+      let actual = bcode.encode(src, encoding)
+      comp(actual, expected)
+    })
   });
 
 
