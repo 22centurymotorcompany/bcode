@@ -1,6 +1,6 @@
 {
   "name": "bcode",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "encoding handler for bitdb",
   "main": "index.js",
   "scripts": {
