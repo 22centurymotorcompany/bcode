@@ -1,5 +1,5 @@
 {
-  "name": "bcode",
+  "name": "fountainhead-bcode",
   "version": "0.0.6",
   "description": "encoding handler for bitdb",
   "main": "index.js",
